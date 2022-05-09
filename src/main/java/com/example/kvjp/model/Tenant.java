@@ -1,8 +1,13 @@
 package com.example.kvjp.model;
 
+import com.example.kvjp.dto.request.TenantRequestDto;
+import lombok.AllArgsConstructor;
+
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 @Entity
+@AllArgsConstructor
 @Table(name = "tenant")
 public class Tenant {
     @Id
@@ -15,11 +20,15 @@ public class Tenant {
 
     private int age;
 
-    private String dob;
+    private Timestamp dob;
 
-    private Long phone;
+    private String phone;
 
     private int gender;
+
+    private String idCard;
+
+    private int status;
 
     @ManyToOne
     @JoinColumn(name = "apartment_id")
@@ -28,14 +37,46 @@ public class Tenant {
     public Tenant() {
     }
 
-    public Tenant(Long id, String name, String email, int age, String dob, Long phone, int gender) {
-        this.id = id;
+
+
+    public void update(TenantRequestDto tenantRequestDto, Apartment apartment) {
+        this.name = tenantRequestDto.getName();
+        this.email = tenantRequestDto.getEmail();
+        this.age = tenantRequestDto.getAge();
+        this.dob = tenantRequestDto.getDob();
+        this.phone = tenantRequestDto.getPhone();
+        this.gender = tenantRequestDto.getGender();
+        this.idCard = tenantRequestDto.getIdCard();
+        this.status = tenantRequestDto.getStatus();
+        this.apartment = apartment;
+    }
+
+    public Tenant(String name, String email, int age, Timestamp dob, String phone, int gender, String idCard, int status, Apartment apartment) {
         this.name = name;
         this.email = email;
         this.age = age;
         this.dob = dob;
         this.phone = phone;
         this.gender = gender;
+        this.idCard = idCard;
+        this.status = status;
+        this.apartment = apartment;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public Apartment getApartment() {
+        return apartment;
+    }
+
+    public void setApartment(Apartment apartment) {
+        this.apartment = apartment;
     }
 
     public Long getId() {
@@ -70,20 +111,29 @@ public class Tenant {
         this.age = age;
     }
 
-    public String getDob() {
+
+    public Timestamp getDob() {
         return dob;
     }
 
-    public void setDob(String dob) {
+    public void setDob(Timestamp dob) {
         this.dob = dob;
     }
 
-    public Long getPhone() {
+    public String getPhone() {
         return phone;
     }
 
-    public void setPhone(Long phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getIdCard() {
+        return idCard;
+    }
+
+    public void setIdCard(String idCard) {
+        this.idCard = idCard;
     }
 
     public int getGender() {

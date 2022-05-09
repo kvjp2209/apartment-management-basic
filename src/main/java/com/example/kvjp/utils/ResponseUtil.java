@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 public class ResponseUtil {
     public ResponseEntity<ResponseDto> getNotFoundResponse(String object) {
         return new ResponseEntity<>(new ResponseDto(HttpStatus.NOT_FOUND.value(),
-                String.format("Constant.FORMAT_NOT_FOUND", object)), HttpStatus.NOT_FOUND);
+                String.format(object)), HttpStatus.NOT_FOUND);
     }
 
     public ResponseEntity<ResponseDto> getBadRequestResponse() {

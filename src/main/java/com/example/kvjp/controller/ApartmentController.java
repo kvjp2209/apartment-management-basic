@@ -1,6 +1,7 @@
 package com.example.kvjp.controller;
 
 import com.example.kvjp.dto.request.ApartmentRequestDto;
+import com.example.kvjp.dto.response.ApartmentResponseDto;
 import com.example.kvjp.dto.response.ResponseDto;
 import com.example.kvjp.model.Apartment;
 import com.example.kvjp.service.ApartmentService;
@@ -12,7 +13,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/apartment")
+@RequestMapping("api/apartments")
 public class ApartmentController extends ResponseController {
     @Autowired
     ApartmentService apartmentService;
@@ -85,6 +86,21 @@ public class ApartmentController extends ResponseController {
             }
             return responseUtil.getSuccessResponse(result);
 
+        } catch (Exception e) {
+            e.printStackTrace();
+            return responseUtil.getInternalServerErrorResponse();
+        }
+    }
+
+    @GetMapping("/all-detail/{id}")
+    public ResponseEntity<ResponseDto> getAllDetailApartment(@PathVariable Long id) {
+        try {
+            Apartment apartment = apartmentService.getById(id);
+            if(apartment == null) {
+                return  responseUtil.getNotFoundResponse("not found apartment!!!");
+            }
+            ApartmentResponseDto apartmentResponseDto = apartmentService.getApartmentDetailsById(id, apartment);
+            return responseUtil.getSuccessResponse(apartmentResponseDto);
         } catch (Exception e) {
             e.printStackTrace();
             return responseUtil.getInternalServerErrorResponse();
