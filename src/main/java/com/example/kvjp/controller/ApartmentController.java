@@ -37,7 +37,7 @@ public class ApartmentController extends ResponseController {
         try {
             List<Apartment> apartments = apartmentService.getAll();
             return responseUtil.getSuccessResponse(apartments);
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return responseUtil.getInternalServerErrorResponse();
         }
@@ -46,7 +46,7 @@ public class ApartmentController extends ResponseController {
     @GetMapping(value = "/{id}")
     public ResponseEntity<ResponseDto> getApartment(@PathVariable("id") Long id) {
         try {
-            Apartment apartment = apartmentService.getById(id);
+            Apartment apartment = apartmentService.getByIdApartment(id);
             if (apartment == null) {
                 return responseUtil.getNotFoundResponse("not found by this id");
             }
@@ -60,7 +60,7 @@ public class ApartmentController extends ResponseController {
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<ResponseDto> deleteApartment(@PathVariable("id") Long id) {
         try {
-            Apartment apartment = apartmentService.getById(id);
+            Apartment apartment = apartmentService.getByIdApartment(id);
             if (apartment == null) {
                 return responseUtil.getNotFoundResponse("not found by this id!");
             }
@@ -75,7 +75,7 @@ public class ApartmentController extends ResponseController {
     @PutMapping(value = "/{id}")
     public ResponseEntity<ResponseDto> updateApartment(@PathVariable("id") Long id, @RequestBody ApartmentRequestDto apartmentRequestDto) {
         try {
-            Apartment apartment = apartmentService.getById(id);
+            Apartment apartment = apartmentService.getByIdApartment(id);
             if (apartment == null) {
                 return responseUtil.getNotFoundResponse("not found apartment!");
             }
@@ -95,9 +95,9 @@ public class ApartmentController extends ResponseController {
     @GetMapping("/all-detail/{id}")
     public ResponseEntity<ResponseDto> getAllDetailApartment(@PathVariable Long id) {
         try {
-            Apartment apartment = apartmentService.getById(id);
-            if(apartment == null) {
-                return  responseUtil.getNotFoundResponse("not found apartment!!!");
+            Apartment apartment = apartmentService.getByIdApartment(id);
+            if (apartment == null) {
+                return responseUtil.getNotFoundResponse("not found apartment!!!");
             }
             ApartmentResponseDto apartmentResponseDto = apartmentService.getApartmentDetailsById(id, apartment);
             return responseUtil.getSuccessResponse(apartmentResponseDto);

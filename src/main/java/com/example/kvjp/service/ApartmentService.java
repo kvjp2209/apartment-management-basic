@@ -100,8 +100,10 @@ public class ApartmentService {
         return apartment;
     }
 
-    public Apartment getById(Long id) {
-        Apartment apartment = apartmentRepository.findById(id).get();
-        return apartment;
+    public Apartment getByIdApartment(Long id) {
+        if (apartmentRepository.findById(id).isPresent()) {
+            return apartmentRepository.findById(id).get();
+        }
+        return null;
     }
 }

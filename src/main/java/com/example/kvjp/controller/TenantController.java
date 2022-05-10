@@ -28,7 +28,7 @@ public class TenantController extends ResponseController {
             if (apartment == null) {
                 return responseUtil.getNotFoundResponse("Not found apartment");
             }
-            Tenant tenant = tenantService.create(tenantRequestDto, apartment);
+            Tenant tenant = tenantService.createTenant(tenantRequestDto, apartment);
             return responseUtil.getSuccessResponse(tenant);
         } catch (Exception e) {
             e.printStackTrace();
@@ -39,7 +39,7 @@ public class TenantController extends ResponseController {
     @GetMapping("/all")
     public ResponseEntity<ResponseDto> getAllTenant() {
         try {
-            List<Tenant> tenants = tenantService.getAll();
+            List<Tenant> tenants = tenantService.getAllTenant();
             return responseUtil.getSuccessResponse(tenants);
         } catch (Exception e) {
             e.printStackTrace();
@@ -50,7 +50,7 @@ public class TenantController extends ResponseController {
     @GetMapping(value = "/{id}")
     public ResponseEntity<ResponseDto> getTenant(@PathVariable("id") Long id) {
         try {
-            Tenant tenant = tenantService.getById(id);
+            Tenant tenant = tenantService.getByIdTenant(id);
             if (tenant == null) {
                 return responseUtil.getNotFoundResponse("not found by this id");
             }
@@ -64,11 +64,11 @@ public class TenantController extends ResponseController {
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<ResponseDto> deleteTenant(@PathVariable("id") Long id) {
         try {
-            Tenant tenant = tenantService.getById(id);
+            Tenant tenant = tenantService.getByIdTenant(id);
             if (tenant == null) {
                 return responseUtil.getNotFoundResponse("not found by this id");
             }
-            tenantService.delete(tenant);
+            tenantService.deleteTenant(tenant);
             return responseUtil.getSuccessResponse();
         } catch (Exception e) {
             e.printStackTrace();
@@ -79,7 +79,7 @@ public class TenantController extends ResponseController {
     @PutMapping(value = "/{id}")
     public ResponseEntity<ResponseDto> updateTenant(@PathVariable("id") Long id, @RequestBody TenantRequestDto tenantRequestDto) {
         try {
-            Tenant tenant = tenantService.getById(id);
+            Tenant tenant = tenantService.getByIdTenant(id);
             if (tenant == null) {
                 return responseUtil.getNotFoundResponse("not found by this id");
             }
@@ -87,7 +87,7 @@ public class TenantController extends ResponseController {
             if (apartment == null) {
                 return responseUtil.getNotFoundResponse("not found by this apartment");
             }
-            Tenant result = tenantService.update(tenantRequestDto, tenant, apartment);
+            Tenant result = tenantService.updateTenant(tenantRequestDto, tenant, apartment);
             if (result == null) {
                 return responseUtil.getBadRequestResponse("Identify card is existed!");
             }

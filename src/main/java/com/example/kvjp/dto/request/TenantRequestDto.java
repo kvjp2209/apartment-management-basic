@@ -41,6 +41,17 @@ public class TenantRequestDto {
         this.apartmentName = apartmentName;
     }
 
+    public TenantRequestDto(String name, String email, int age, Timestamp dob, String phone, int gender, String idCard, int status) {
+        this.name = name;
+        this.email = email;
+        this.age = age;
+        this.dob = dob;
+        this.phone = phone;
+        this.gender = gender;
+        this.idCard = idCard;
+        this.status = status;
+    }
+
     public int getStatus() {
         return status;
     }

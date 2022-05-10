@@ -17,11 +17,11 @@ public class TenantService {
     @Autowired
     TenantRepository tenantRepository;
 
-    public List<Tenant> getAll() {
+    public List<Tenant> getAllTenant() {
         return tenantRepository.findAll();
     }
 
-    public Tenant getById(Long id) {
+    public Tenant getByIdTenant(Long id) {
         if (tenantRepository.findById(id).isPresent()) {
             return tenantRepository.findById(id).get();
         }
@@ -29,7 +29,7 @@ public class TenantService {
     }
 
     @Transactional
-    public Tenant create(TenantRequestDto tenantRequestDto, Apartment apartment) {
+    public Tenant createTenant(TenantRequestDto tenantRequestDto, Apartment apartment) {
         Tenant tenant = new Tenant(tenantRequestDto.getName(),
                 tenantRequestDto.getEmail(),
                 tenantRequestDto.getAge(),
@@ -37,19 +37,18 @@ public class TenantService {
                 tenantRequestDto.getPhone(),
                 tenantRequestDto.getGender(),
                 tenantRequestDto.getIdCard(),
-                tenantRequestDto.getStatus(),
-                apartment);
+                tenantRequestDto.getStatus());
         tenantRepository.save(tenant);
         return tenant;
     }
 
-    public void delete(Tenant tenant) {
+    public void deleteTenant(Tenant tenant) {
         tenant.setStatus(EStatus.DISABLE.getId());
         tenantRepository.save(tenant);
     }
 
     @Transactional
-    public Tenant update(TenantRequestDto tenantRequestDto, Tenant tenant, Apartment apartment) {
+    public Tenant updateTenant(TenantRequestDto tenantRequestDto, Tenant tenant, Apartment apartment) {
         if (!tenant.getIdCard().equalsIgnoreCase(tenantRequestDto.getIdCard()) == true) {
             if (checkDuplicateIdCard(tenantRequestDto.getIdCard()) == false) {
                 return null;

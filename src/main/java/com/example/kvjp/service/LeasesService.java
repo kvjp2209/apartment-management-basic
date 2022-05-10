@@ -1,5 +1,6 @@
 package com.example.kvjp.service;
 
+import com.example.kvjp.constant.EStatus;
 import com.example.kvjp.dto.request.LeasesRequestDto;
 import com.example.kvjp.model.Apartment;
 import com.example.kvjp.model.Leases;
@@ -18,12 +19,13 @@ public class LeasesService {
 
     @Autowired
     TenantRepository tenantRepository;
-    public List<Leases> getAll() {
+
+    public List<Leases> getAllLeases() {
         List<Leases> leases = leasesRepository.findAll();
         return leases;
     }
 
-    public Leases create(LeasesRequestDto leasesRequestDto, Apartment apartment, Tenant tenant) {
+    public Leases createOrUpdateLeases(LeasesRequestDto leasesRequestDto, Apartment apartment, Tenant tenant) {
 
         Leases leases = new Leases(
                 leasesRequestDto.getDate(),
@@ -36,5 +38,16 @@ public class LeasesService {
         return leases;
     }
 
+    public Leases getByIdLeases(Long id) {
+        if (leasesRepository.findById(id).isPresent()) {
+            return leasesRepository.findById(id).get();
+        }
+        return null;
+    }
+
+    public void deleteLeases(Leases leases) {
+        leases.setStatus(EStatus.DISABLE.getId());
+        leasesRepository.save(leases);
+    }
 
 }
