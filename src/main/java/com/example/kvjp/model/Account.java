@@ -1,31 +1,34 @@
 package com.example.kvjp.model;
 
+import lombok.AllArgsConstructor;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "account")
+@AllArgsConstructor
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String username;
+    private String email;
 
     private String password;
-
-    private String email;
 
     private String name;
 
     private Long phone;
 
-    public Account(Long id, String username, String password, String email, String name, Long phone) {
+    public Account(Long id, String email, String password) {
         this.id = id;
-        this.username = username;
-        this.password = password;
         this.email = email;
-        this.name = name;
-        this.phone = phone;
+        this.password = password;
+    }
+
+    public Account(String email, String password) {
+        this.email = email;
+        this.password = password;
     }
 
     public String getEmail() {
@@ -55,31 +58,12 @@ public class Account {
     public Account() {
     }
 
-    public Account(Long id, String username, String password) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-    }
-
-    public Account(String username, String password) {
-        this.username = username;
-        this.password = password;
-    }
-
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public String getPassword() {
