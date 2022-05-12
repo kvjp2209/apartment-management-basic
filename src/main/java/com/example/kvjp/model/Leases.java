@@ -1,10 +1,13 @@
 package com.example.kvjp.model;
 
+import lombok.Builder;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
 @Table(name = "leases")
+@Builder
 public class Leases {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

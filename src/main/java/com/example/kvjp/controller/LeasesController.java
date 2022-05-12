@@ -37,7 +37,7 @@ public class LeasesController extends ResponseController {
                 return responseUtil.getNotFoundResponse("Not found Tenent");
             }
 
-            Leases leases = leasesService.createOrUpdateLeases(leasesRequestDto, apartment, tenant);
+            Leases leases = leasesService.createLeases(leasesRequestDto, apartment, tenant);
 
             return responseUtil.getSuccessResponse(leases);
         } catch (Exception e) {
@@ -60,10 +60,10 @@ public class LeasesController extends ResponseController {
             }
             Tenant tenant = tenantService.getByIdTenant(leasesRequestDto.getTenantId());
             if (tenant == null) {
-                return responseUtil.getNotFoundResponse("Not found Tenent");
+                return responseUtil.getNotFoundResponse("Not found Tenant");
             }
 
-            leasesService.createOrUpdateLeases(leasesRequestDto, apartment, tenant);
+            leasesService.updateLeases(leasesRequestDto, leases, apartment, tenant);
             return responseUtil.getSuccessResponse();
         } catch (Exception e) {
             e.printStackTrace();

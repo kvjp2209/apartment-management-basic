@@ -25,7 +25,7 @@ public class LeasesService {
         return leases;
     }
 
-    public Leases createOrUpdateLeases(LeasesRequestDto leasesRequestDto, Apartment apartment, Tenant tenant) {
+    public Leases createLeases(LeasesRequestDto leasesRequestDto, Apartment apartment, Tenant tenant) {
 
         Leases leases = new Leases(
                 leasesRequestDto.getDate(),
@@ -34,6 +34,21 @@ public class LeasesService {
                 apartment,
                 tenant);
 
+        Leases leases1 = new Leases().builder()
+                .id(123L)
+                .date(null)
+                .build();
+
+        leasesRepository.save(leases);
+        return leases;
+    }
+
+    public Leases updateLeases(LeasesRequestDto leasesRequestDto, Leases leases, Apartment apartment, Tenant tenant) {
+        leases.setDate(leasesRequestDto.getDate());
+        leases.setStatus(leasesRequestDto.getStatus());
+        leases.setPrice(leasesRequestDto.getPrice());
+        leases.setApartment(apartment);
+        leases.setTenant(tenant);
         leasesRepository.save(leases);
         return leases;
     }
