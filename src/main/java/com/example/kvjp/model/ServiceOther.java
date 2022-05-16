@@ -11,14 +11,26 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Data
 @Table(name = "service")
-public class Service {
+public class ServiceOther {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     private String name;
 
-    public Service(String name) {
+    private int price;
+
+    public ServiceOther(String name) {
         this.name = name;
+    }
+
+
+    @Override
+    public String toString() {
+        return "ServiceOther" +
+                id +
+                ": name='" + name + '\'' +
+                "- price=" + price +
+                "VND";
     }
 }

@@ -16,8 +16,8 @@ public class ElectricBillService {
     ElectricBillRepository electricBillRepository;
 
 
-    public boolean checkDuplicateName(String name) {
-        if (electricBillRepository.findByName(name) != null) {
+    public boolean checkDuplicateNameAtProcessing(String name, int status) {
+        if (electricBillRepository.findByNameAndAndStatus(name, status) != null) {
             return true;
         }
         return false;
@@ -37,7 +37,8 @@ public class ElectricBillService {
 
     public ElectricBill createElectricBill(ElectricBillRequestDto electricBillRequestDto) {
         ElectricBill electricBill =  new ElectricBill().builder()
-                .name(electricBillRequestDto.getName())
+                .name("elec_" + electricBillRequestDto.getName())
+                .electricNumberOld(0)
                 .electricNumberNew(electricBillRequestDto.getElectricNumberNew())
                 .unit(electricBillRequestDto.getUnit())
                 .status(EProcess.PROCESSING.getId())
@@ -49,7 +50,7 @@ public class ElectricBillService {
     @Transactional
     public ElectricBill updateElectricBill(ElectricBillRequestDto electricBillRequestDto, ElectricBill electricBill) {
         if (!electricBill.getName().equalsIgnoreCase(electricBillRequestDto.getName()) && electricBill.getStatus() == EProcess.PROCESSING.getId()) {
-            if (checkDuplicateName(electricBill.getName()) == true) {
+            if (checkDuplicateNameAtProcessing(electricBill.getName(), EProcess.PROCESSING.getId()) == true) {
                 return null;
             }
             electricBill.update(electricBillRequestDto, electricBill);
@@ -67,13 +68,21 @@ public class ElectricBillService {
         electricBillRepository.save(electricBill);
     }
 
-    public ElectricBill getById(Long id) {
-        ElectricBill electricBill = electricBillRepository.findById(id).get();
+    public ElectricBill getById(Integer id) {
+        if (electricBillRepository.findById(id).isPresent()) {
+            return electricBillRepository.findById(id).get();
+        }
+        return null;
+    }
+
+    public ElectricBill getByIdAndStatus(int id, int status) {
+        ElectricBill electricBill = electricBillRepository.findByIdAndStatus(id, status);
         return electricBill;
     }
 
-    public ElectricBill getByName(String name) {
-        ElectricBill electricBill = electricBillRepository.findByName(name);
+
+    public ElectricBill getByNameAndStatus(String name, int status) {
+        ElectricBill electricBill = electricBillRepository.findByNameAndAndStatus(name, status);
         return electricBill;
     }
 

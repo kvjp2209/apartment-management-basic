@@ -15,23 +15,18 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/electrics")
-public class ElectricBillController extends ResponseController{
+public class ElectricBillController extends ResponseController {
     @Autowired
     ElectricBillService electricBillService;
 
     @PostMapping
     public ResponseEntity<ResponseDto> createElectricBill(@Valid @RequestBody ElectricBillRequestDto electricBillRequestDto) {
         try {
-            ElectricBill electricBill = electricBillService.getByName(electricBillRequestDto.getName());
-            if (electricBill != null) {
-                if (electricBill.getStatus() == EProcess.PROCESSING.getId()) {
-                    return responseUtil.getBadRequestResponse("Name existed and processing!!!");
-                }
-                ElectricBill electricBill1 = electricBillService.createElectricBill(electricBillRequestDto);
-                return responseUtil.getSuccessResponse(electricBill1);
+            if (electricBillService.getByNameAndStatus(electricBillRequestDto.getName(), EProcess.PROCESSING.getId()) != null) {
+                return responseUtil.getBadRequestResponse("Name existed and processing!!!");
             }
-            ElectricBill electricBill1 = electricBillService.createElectricBill(electricBillRequestDto);
-            return responseUtil.getSuccessResponse(electricBill1);
+            ElectricBill electricBill = electricBillService.createElectricBill(electricBillRequestDto);
+            return responseUtil.getSuccessResponse(electricBill);
         } catch (Exception e) {
             e.printStackTrace();
             return responseUtil.getInternalServerErrorResponse();
@@ -39,7 +34,7 @@ public class ElectricBillController extends ResponseController{
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<ResponseDto> updateElectricBill(@Valid @RequestBody ElectricBillRequestDto electricBillRequestDto, @PathVariable Long id) {
+    public ResponseEntity<ResponseDto> updateElectricBill(@Valid @RequestBody ElectricBillRequestDto electricBillRequestDto, @PathVariable Integer id) {
         try {
             ElectricBill electricBill = electricBillService.getById(id);
             if (electricBill == null) {

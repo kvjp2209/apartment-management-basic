@@ -21,16 +21,11 @@ public class WaterBillController extends ResponseController {
     @PostMapping
     public ResponseEntity<ResponseDto> createWaterBill(@Valid @RequestBody WaterBillRequestDto waterBillRequestDto) {
         try {
-            WaterBill waterBill = waterBillService.getByName(waterBillRequestDto.getName());
-            if (waterBill != null) {
-                if (waterBill.getStatus() == EProcess.PROCESSING.getId()) {
-                    return responseUtil.getBadRequestResponse("Name existed and processing!!!");
-                }
-                WaterBill waterBill1 = waterBillService.createWaterBill(waterBillRequestDto);
-                return responseUtil.getSuccessResponse(waterBill1);
+            if (waterBillService.getByNameAndStatus(waterBillRequestDto.getName(), EProcess.PROCESSING.getId()) != null) {
+                return responseUtil.getBadRequestResponse("Name existed and processing!!!");
             }
-            WaterBill waterBill1 = waterBillService.createWaterBill(waterBillRequestDto);
-            return responseUtil.getSuccessResponse(waterBill1);
+            WaterBill waterBill = waterBillService.createWaterBill(waterBillRequestDto);
+            return responseUtil.getSuccessResponse(waterBill);
         } catch (Exception e) {
             e.printStackTrace();
             return responseUtil.getInternalServerErrorResponse();
@@ -38,9 +33,9 @@ public class WaterBillController extends ResponseController {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<ResponseDto> updateWaterBill(@Valid @RequestBody WaterBillRequestDto waterBillRequestDto, @PathVariable Long id) {
+    public ResponseEntity<ResponseDto> updateWaterBill(@Valid @RequestBody WaterBillRequestDto waterBillRequestDto, @PathVariable Integer id) {
         try {
-            WaterBill waterBill = waterBillService.getById(id);
+            WaterBill waterBill = waterBillService.getByIdWaterBill(id);
             if (waterBill == null) {
                 return responseUtil.getNotFoundResponse("Not found water bill");
             }
@@ -66,5 +61,19 @@ public class WaterBillController extends ResponseController {
         }
     }
 
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<ResponseDto> deleteWaterBill(@PathVariable Integer id) {
+        try {
+            WaterBill waterBill = waterBillService.getByIdWaterBill(id);
+            if (waterBill == null) {
+                return responseUtil.getNotFoundResponse("Not found this water bill");
+            }
+            waterBillService.disableWaterBill(waterBill);
+            return responseUtil.getSuccessResponse();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return responseUtil.getInternalServerErrorResponse();
+        }
+    }
 
 }

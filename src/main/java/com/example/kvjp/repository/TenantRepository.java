@@ -8,11 +8,11 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface TenantRepository extends JpaRepository<Tenant, Long> {
+public interface TenantRepository extends JpaRepository<Tenant, Integer> {
     @Query(value = "SELECT te FROM Tenant te " +
             "JOIN FETCH te.apartment a " +
             "WHERE te.apartment.id = :id")
-    List<Tenant> findAllByApartmentId(Long id);
+    List<Tenant> findAllByApartmentId(Integer id);
 
     Tenant findByIdCard(String idCard);
 

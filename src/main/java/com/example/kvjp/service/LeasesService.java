@@ -34,11 +34,6 @@ public class LeasesService {
                 apartment,
                 tenant);
 
-        Leases leases1 = new Leases().builder()
-                .id(123L)
-                .date(null)
-                .build();
-
         leasesRepository.save(leases);
         return leases;
     }
@@ -53,7 +48,7 @@ public class LeasesService {
         return leases;
     }
 
-    public Leases getByIdLeases(Long id) {
+    public Leases getByIdLeases(Integer id) {
         if (leasesRepository.findById(id).isPresent()) {
             return leasesRepository.findById(id).get();
         }

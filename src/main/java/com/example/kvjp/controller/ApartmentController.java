@@ -44,7 +44,7 @@ public class ApartmentController extends ResponseController {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<ResponseDto> getApartment(@PathVariable("id") Long id) {
+    public ResponseEntity<ResponseDto> getApartment(@PathVariable("id") Integer id) {
         try {
             Apartment apartment = apartmentService.getByIdApartment(id);
             if (apartment == null) {
@@ -58,7 +58,7 @@ public class ApartmentController extends ResponseController {
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<ResponseDto> deleteApartment(@PathVariable("id") Long id) {
+    public ResponseEntity<ResponseDto> deleteApartment(@PathVariable("id") Integer id) {
         try {
             Apartment apartment = apartmentService.getByIdApartment(id);
             if (apartment == null) {
@@ -73,7 +73,7 @@ public class ApartmentController extends ResponseController {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<ResponseDto> updateApartment(@PathVariable("id") Long id, @RequestBody ApartmentRequestDto apartmentRequestDto) {
+    public ResponseEntity<ResponseDto> updateApartment(@PathVariable("id") Integer id, @RequestBody ApartmentRequestDto apartmentRequestDto) {
         try {
             Apartment apartment = apartmentService.getByIdApartment(id);
             if (apartment == null) {
@@ -93,7 +93,7 @@ public class ApartmentController extends ResponseController {
     }
 
     @GetMapping("/all-detail/{id}")
-    public ResponseEntity<ResponseDto> getAllDetailApartment(@PathVariable Long id) {
+    public ResponseEntity<ResponseDto> getAllDetailApartment(@PathVariable Integer id) {
         try {
             Apartment apartment = apartmentService.getByIdApartment(id);
             if (apartment == null) {

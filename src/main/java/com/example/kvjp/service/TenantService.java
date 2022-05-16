@@ -21,7 +21,7 @@ public class TenantService {
         return tenantRepository.findAll();
     }
 
-    public Tenant getByIdTenant(Long id) {
+    public Tenant getByIdTenant(Integer id) {
         if (tenantRepository.findById(id).isPresent()) {
             return tenantRepository.findById(id).get();
         }

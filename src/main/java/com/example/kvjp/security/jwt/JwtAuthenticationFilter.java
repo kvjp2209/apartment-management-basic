@@ -39,7 +39,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
             if (StringUtils.hasText(jwt) && tokenProvider.validateToken(jwt)) {
                 // Lấy username từ chuỗi jwt
-        //        Long userId = tokenProvider.getUserIdFromJWT(jwt);
+        //        Integer userId = tokenProvider.getUserIdFromJWT(jwt);
                 String email = tokenProvider.getUserNameFromJwtToken(jwt);
 
                 Account account = accountRepository.findByEmail(email).get();

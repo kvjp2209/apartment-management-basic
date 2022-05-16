@@ -24,6 +24,13 @@ public class WaterBillService {
         return false;
     }
 
+    public boolean checkDuplicateNameAtProcessing(String name, int status) {
+        if (waterBillRepository.findByNameAndStatus(name, status) != null) {
+            return true;
+        }
+        return false;
+    }
+
     @Transactional
     public WaterBill createWaterBill(WaterBillRequestDto waterBillRequestDto, String nameReceivable) {
         WaterBill waterBill = new WaterBill().builder()
@@ -39,7 +46,8 @@ public class WaterBillService {
     @Transactional
     public WaterBill createWaterBill(WaterBillRequestDto waterBillRequestDto) {
         WaterBill waterBill = new WaterBill().builder()
-                .name(waterBillRequestDto.getName())
+                .name("water_" + waterBillRequestDto.getName())
+                .waterNumberOld(0)
                 .waterNumberNew(waterBillRequestDto.getWaterNumberNew())
                 .unit(waterBillRequestDto.getUnit())
                 .status(EProcess.PROCESSING.getId())
@@ -51,7 +59,7 @@ public class WaterBillService {
     @Transactional
     public WaterBill updateWaterBill(WaterBillRequestDto waterBillRequestDto, WaterBill waterBill) {
         if (!waterBill.getName().equalsIgnoreCase(waterBillRequestDto.getName()) && waterBill.getStatus() == EProcess.PROCESSING.getId()) {
-            if (checkDuplicateName(waterBill.getName()) == true) {
+            if (checkDuplicateNameAtProcessing(waterBillRequestDto.getName(), EProcess.PROCESSING.getId()) == true) {
                 return null;
             }
             waterBill.update(waterBillRequestDto, waterBill);
@@ -69,8 +77,15 @@ public class WaterBillService {
         waterBillRepository.save(waterBill);
     }
 
-    public WaterBill getById(Long id) {
-        WaterBill waterBill = waterBillRepository.getById(id);
+    public WaterBill getByIdWaterBill(Integer id) {
+        if (waterBillRepository.findById(id).isPresent()) {
+            return waterBillRepository.findById(id).get();
+        }
+        return null;
+    }
+
+    public WaterBill getByIdAndStatus(int id, int status) {
+        WaterBill waterBill = waterBillRepository.findByIdAndStatus(id, status);
         return waterBill;
     }
 
@@ -79,7 +94,13 @@ public class WaterBillService {
         return waterBill;
     }
 
+    public WaterBill getByNameAndStatus(String name, int status) {
+        WaterBill waterBill = waterBillRepository.findByNameAndStatus(name, status);
+        return waterBill;
+    }
+
     public List<WaterBill> getAllWaterBill() {
         return waterBillRepository.findAll();
     }
+
 }

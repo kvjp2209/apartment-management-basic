@@ -2,25 +2,26 @@ package com.example.kvjp.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 
 public class LeasesRequestDto {
-    private Timestamp date;
+    private Date date;
 
     private int status;
 
     private int price;
 
     @JsonProperty("apartment_id")
-    private Long apartmentId;
+    private Integer apartmentId;
 
     @JsonProperty("tenant_id")
-    private Long tenantId;
+    private Integer tenantId;
 
     public LeasesRequestDto() {
     }
 
-    public LeasesRequestDto(Timestamp date, int status, int price, Long apartmentId, Long tenantId) {
+    public LeasesRequestDto(Date date, int status, int price, Integer apartmentId, Integer tenantId) {
         this.date = date;
         this.status = status;
         this.price = price;
@@ -28,11 +29,11 @@ public class LeasesRequestDto {
         this.tenantId = tenantId;
     }
 
-    public Timestamp getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(Timestamp date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
@@ -52,19 +53,19 @@ public class LeasesRequestDto {
         this.price = price;
     }
 
-    public Long getApartmentId() {
+    public Integer getApartmentId() {
         return apartmentId;
     }
 
-    public void setApartmentId(Long apartmentId) {
+    public void setApartmentId(Integer apartmentId) {
         this.apartmentId = apartmentId;
     }
 
-    public Long getTenantId() {
+    public Integer getTenantId() {
         return tenantId;
     }
 
-    public void setTenantId(Long tenantId) {
+    public void setTenantId(Integer tenantId) {
         this.tenantId = tenantId;
     }
 }

@@ -48,7 +48,7 @@ public class LeasesController extends ResponseController {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<ResponseDto> updateLeases(@PathVariable("id") Long id, @RequestBody LeasesRequestDto leasesRequestDto) {
+    public ResponseEntity<ResponseDto> updateLeases(@PathVariable("id") Integer id, @RequestBody LeasesRequestDto leasesRequestDto) {
         try {
             Leases leases = leasesService.getByIdLeases(id);
             if (leases == null) {
@@ -72,7 +72,7 @@ public class LeasesController extends ResponseController {
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<ResponseDto> deleteLease(@PathVariable("id") Long id) {
+    public ResponseEntity<ResponseDto> deleteLease(@PathVariable("id") Integer id) {
         try {
             Leases leases = leasesService.getByIdLeases(id);
             if (leases == null) {
@@ -87,7 +87,7 @@ public class LeasesController extends ResponseController {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<ResponseDto> getByIdLeases(@PathVariable("id") Long id) {
+    public ResponseEntity<ResponseDto> getByIdLeases(@PathVariable("id") Integer id) {
         try {
             Leases leases = leasesService.getByIdLeases(id);
             if (leases == null) {

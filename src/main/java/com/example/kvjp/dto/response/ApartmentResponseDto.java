@@ -5,7 +5,7 @@ import com.example.kvjp.model.Tenant;
 import java.util.List;
 
 public class ApartmentResponseDto {
-    private Long id;
+    private Integer id;
 
     private String name;
 
@@ -25,7 +25,7 @@ public class ApartmentResponseDto {
 
     private List<Tenant> tenants;
 
-    public ApartmentResponseDto(Long id, String name, int status, int area, int bedroom, int bathroom, String image, int price, int numberIn, List<Tenant> tenants) {
+    public ApartmentResponseDto(Integer id, String name, int status, int area, int bedroom, int bathroom, String image, int price, int numberIn, List<Tenant> tenants) {
         this.id = id;
         this.name = name;
         this.status = status;
@@ -63,11 +63,11 @@ public class ApartmentResponseDto {
     public ApartmentResponseDto() {
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

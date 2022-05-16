@@ -3,6 +3,7 @@ package com.example.kvjp.model;
 import lombok.Builder;
 
 import javax.persistence.*;
+import java.sql.Date;
 import java.sql.Timestamp;
 
 @Entity
@@ -11,9 +12,9 @@ import java.sql.Timestamp;
 public class Leases {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
-    private Timestamp date;
+    private Date date;
 
     private int status;
 
@@ -30,7 +31,7 @@ public class Leases {
     public Leases() {
     }
 
-    public Leases(Long id, Timestamp date, int status, int price, Apartment apartment, Tenant tenant) {
+    public Leases(Integer id, Date date, int status, int price, Apartment apartment, Tenant tenant) {
         this.id = id;
         this.date = date;
         this.status = status;
@@ -39,7 +40,7 @@ public class Leases {
         this.tenant = tenant;
     }
 
-    public Leases(Timestamp date, int status, int price, Apartment apartment, Tenant tenant) {
+    public Leases(Date date, int status, int price, Apartment apartment, Tenant tenant) {
         this.date = date;
         this.status = status;
         this.price = price;
@@ -47,19 +48,19 @@ public class Leases {
         this.tenant = tenant;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public Timestamp getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(Timestamp date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 

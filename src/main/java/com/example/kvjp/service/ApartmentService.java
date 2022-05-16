@@ -47,7 +47,7 @@ public class ApartmentService {
         return apartment;
     }
 
-    public ApartmentResponseDto getApartmentDetailsById(Long id,Apartment apartment) {
+    public ApartmentResponseDto getApartmentDetailsById(Integer id,Apartment apartment) {
         List<Tenant> tenants = tenantRepository.findAllByApartmentId(id);
         ApartmentResponseDto apartmentResponseDto = new ApartmentResponseDto(
                 apartment.getId(),
@@ -100,7 +100,7 @@ public class ApartmentService {
         return apartment;
     }
 
-    public Apartment getByIdApartment(Long id) {
+    public Apartment getByIdApartment(Integer id) {
         if (apartmentRepository.findById(id).isPresent()) {
             return apartmentRepository.findById(id).get();
         }

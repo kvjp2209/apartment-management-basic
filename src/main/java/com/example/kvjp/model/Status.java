@@ -11,7 +11,7 @@ public class Status {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "`id`")
-    private Long id;
+    private Integer id;
 
     @Enumerated(EnumType.STRING)
     private EStatus eStatus;
@@ -19,7 +19,7 @@ public class Status {
     public Status() {
     }
 
-    public Status(Long id, EStatus eStatus) {
+    public Status(Integer id, EStatus eStatus) {
         this.id = id;
         this.eStatus = eStatus;
     }
@@ -28,11 +28,11 @@ public class Status {
         this.eStatus = eStatus;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

@@ -1,12 +1,15 @@
 package com.example.kvjp.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,21 +17,23 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @Table(name = "receivable")
+@Builder
 public class Receivable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
-    private Long id;
+    private Integer id;
 
     private String name;
 
     private int payment;
 
     @CreationTimestamp
-    private Timestamp createAt;
+    @JsonFormat(pattern = "dd/MM/YYYY HH:mm:ss")
+    private Date createAt;
 
     @UpdateTimestamp
-    private Timestamp updateAt;
+    @JsonFormat(pattern = "dd/MM/YYYY HH:mm:ss")
+    private Date updateAt;
 
     private int status;
 
@@ -38,7 +43,7 @@ public class Receivable {
             joinColumns = @JoinColumn(name = "receivable_id"),
             inverseJoinColumns = @JoinColumn(name = "service_id")
     )
-    private Set<Service> service = new HashSet<>();
+    private Set<ServiceOther> service = new HashSet<>();
 
     @OneToOne
     @JoinColumn(name = "electric_bill_id")

@@ -10,7 +10,7 @@ import javax.persistence.*;
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     private String email;
 
@@ -18,9 +18,9 @@ public class Account {
 
     private String name;
 
-    private Long phone;
+    private Integer phone;
 
-    public Account(Long id, String email, String password) {
+    public Account(Integer id, String email, String password) {
         this.id = id;
         this.email = email;
         this.password = password;
@@ -47,22 +47,22 @@ public class Account {
         this.name = name;
     }
 
-    public Long getPhone() {
+    public Integer getPhone() {
         return phone;
     }
 
-    public void setPhone(Long phone) {
+    public void setPhone(Integer phone) {
         this.phone = phone;
     }
 
     public Account() {
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

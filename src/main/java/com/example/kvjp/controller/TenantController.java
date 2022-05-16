@@ -48,7 +48,7 @@ public class TenantController extends ResponseController {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<ResponseDto> getTenant(@PathVariable("id") Long id) {
+    public ResponseEntity<ResponseDto> getTenant(@PathVariable("id") Integer id) {
         try {
             Tenant tenant = tenantService.getByIdTenant(id);
             if (tenant == null) {
@@ -62,7 +62,7 @@ public class TenantController extends ResponseController {
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<ResponseDto> deleteTenant(@PathVariable("id") Long id) {
+    public ResponseEntity<ResponseDto> deleteTenant(@PathVariable("id") Integer id) {
         try {
             Tenant tenant = tenantService.getByIdTenant(id);
             if (tenant == null) {
@@ -77,7 +77,7 @@ public class TenantController extends ResponseController {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<ResponseDto> updateTenant(@PathVariable("id") Long id, @RequestBody TenantRequestDto tenantRequestDto) {
+    public ResponseEntity<ResponseDto> updateTenant(@PathVariable("id") Integer id, @RequestBody TenantRequestDto tenantRequestDto) {
         try {
             Tenant tenant = tenantService.getByIdTenant(id);
             if (tenant == null) {
