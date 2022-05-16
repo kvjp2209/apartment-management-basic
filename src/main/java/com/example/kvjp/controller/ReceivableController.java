@@ -115,4 +115,21 @@ public class ReceivableController extends ResponseController {
             return responseUtil.getInternalServerErrorResponse();
         }
     }
+
+    @GetMapping(value = "/{id}/send-mail")
+    public ResponseEntity<ResponseDto> sendReceivabletoBill(@PathVariable int id) {
+        try {
+            Receivable receivable = receivableService.getByIdReceivable(id);
+            if (receivable == null) {
+                return responseUtil.getSuccessResponse("not found receivable");
+            }
+            receivableService.sendMailToUser(receivable);
+            return responseUtil.getSuccessResponse(receivableService.formatEmailReceivable(receivable));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return responseUtil.getInternalServerErrorResponse();
+        }
+    }
+
+
 }

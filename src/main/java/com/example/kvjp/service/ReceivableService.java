@@ -7,10 +7,12 @@ import com.example.kvjp.model.*;
 import com.example.kvjp.repository.ElectricBillRepository;
 import com.example.kvjp.repository.ReceivableRepository;
 import com.example.kvjp.repository.WaterBillRepository;
+import com.example.kvjp.service.email.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Set;
 
@@ -30,6 +32,9 @@ public class ReceivableService {
 
     @Autowired
     WaterBillService waterBillService;
+
+    @Autowired
+    EmailService emailService;
 
     @Autowired
     ServiceOtherService serviceOtherService;
@@ -274,13 +279,26 @@ public class ReceivableService {
         return s;
     }
 
+    public void sendMailToUser(Receivable receivable) {
+        String timeStamp = new SimpleDateFormat("yyyy.MM.dd").format(new java.util.Date());
+        System.out.println("Test: " + timeStamp);
+        emailService.sendSimpleEmail(
+                receivable.getLeases().getTenant().getEmail(),
+                timeStamp + "[#ROOM_" +receivable.getLeases().getApartment().getName() + "] THÔNG BÁO HOÁ ĐƠN CẦN THANH TOÁN ",
+                formatEmailReceivable(receivable)
+                );
+    }
+    @Transactional
     public String formatEmailReceivable(Receivable receivable) {
         return
                 "PHÍ DỊCH VỤ CĂN HỘ " + receivable.getLeases().getApartment().getName() +
                         "\nTên chủ hộ: " + receivable.getLeases().getTenant().getName() +
                         "\nNội dung cần thanh toán: \n" +
-                        "\n- Giá điện: " + receivable.getElectricBill().getUnit() + " VND (Số cũ: " + receivable.getElectricBill().getElectricNumberOld() + " - Số mới: " + receivable.getElectricBill().getElectricNumberNew() + ")" +
-                        "\n- Giá nước sạch: " + receivable.getWaterBill().getUnit() + " VND (Số cũ: " + receivable.getWaterBill().getWaterNumberOld() + " - Số mới: " + receivable.getWaterBill().getWaterNumberNew() + ")" +
+                        "\n- Giá phòng: " + receivable.getLeases().getApartment().getPrice() + "VND" +
+                        "\n- Giá điện: " + receivable.getElectricBill().getUnit() + " (đơn vị: X/VND) - (Số cũ: " + receivable.getElectricBill().getElectricNumberOld() + " - Số mới: " + receivable.getElectricBill().getElectricNumberNew() + ")" +
+                        "\n- Thành tiền: " + separatePricing(receivable.getElectricBill().getElectricNumberOld(), receivable.getElectricBill().getElectricNumberNew(), receivable.getElectricBill().getUnit()) +
+                        "\n- Giá nước sạch: " + receivable.getWaterBill().getUnit() + " (đơn vị: X/VND) - (Số cũ: " + receivable.getWaterBill().getWaterNumberOld() + " - Số mới: " + receivable.getWaterBill().getWaterNumberNew() + ")" +
+                        "\n- Thành tiền: " + separatePricing(receivable.getWaterBill().getWaterNumberOld(), receivable.getWaterBill().getWaterNumberNew(), receivable.getWaterBill().getUnit()) +
                         "\n- Các chi phí dịch phụ khác : " +
                         "\t" +
                         listServiceOtherOnAReservation(receivable) +

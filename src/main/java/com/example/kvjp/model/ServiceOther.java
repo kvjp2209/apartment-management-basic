@@ -27,10 +27,10 @@ public class ServiceOther {
 
     @Override
     public String toString() {
-        return "ServiceOther" +
+        return "\n\t + " +
                 id +
-                ": name='" + name + '\'' +
-                "- price=" + price +
-                "VND";
+                ": name = " + name +
+                " --- price = " + price +
+                "VND\n";
     }
 }
