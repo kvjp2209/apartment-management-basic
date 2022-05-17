@@ -16,7 +16,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/api/leases")
+@RequestMapping(value = "/api/leases",name = "leases ")
 public class LeasesController extends ResponseController {
     @Autowired
     TenantService tenantService;
@@ -25,7 +25,7 @@ public class LeasesController extends ResponseController {
     @Autowired
     ApartmentService apartmentService;
 
-    @PostMapping
+    @PostMapping()
     public ResponseEntity<ResponseDto> createLeases(@Valid @RequestBody LeasesRequestDto leasesRequestDto) {
         try {
             Apartment apartment = apartmentService.getByIdApartment(leasesRequestDto.getApartmentId());

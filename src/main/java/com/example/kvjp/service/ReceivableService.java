@@ -126,55 +126,6 @@ public class ReceivableService {
         return result;
     }
 
-//    public ReceivableResponseDto createReceivable(ReceivableRequestDto receivableRequestDto, Leases leases) {
-//        ElectricBill electricBill = electricBillService.getById(receivableRequestDto.getElectricBillId());
-//        if (electricBill == null || electricBill.getStatus() == EProcess.DONE.getId()) {
-//            electricBill = new ElectricBill().builder()
-//                    .name(receivableRequestDto.getName())
-//                    .status(EProcess.PROCESSING.getId())
-//                    .build();
-//        }
-//
-//        WaterBill waterBill = waterBillService.getById(receivableRequestDto.getWaterBillId());
-//        if (waterBill == null || waterBill.getStatus() == EProcess.DONE.getId()) {
-//            waterBill = new WaterBill().builder()
-//                    .name(receivableRequestDto.getName())
-//                    .status(EProcess.PROCESSING.getId())
-//                    .build();
-//        }
-//
-//        int electricPayment = separatePricing(electricBill.getElectricNumberNew(), electricBill.getElectricNumberOld(), electricBill.getUnit());
-//
-//        int waterPayment = separatePricing(waterBill.getWaterNumberNew(), waterBill.getWaterNumberOld(), waterBill.getUnit());
-//
-//        Set<ServiceOther> serviceOthers = serviceOtherService.getServiceListById(
-//                receivableRequestDto.getServices()
-//        );
-//        //tính tổng tiền những service đã chọn
-//        int servicePayment = serviceOtherService.getTotalServicePriceIn(serviceOthers);
-//
-//        //tính tổng tiền tất cả phải chi
-//        int calculationPayment = electricPayment + waterPayment + leases.getApartment().getPrice()
-//                 + servicePayment;
-//
-//        //tạo bill
-//        String payment = createBill(servicePayment, electricPayment, waterPayment, leases.getApartment().getPrice(), calculationPayment);
-//
-//        Receivable receivable = new Receivable().builder()
-//                .name(receivableRequestDto.getName())
-//                .payment(calculationPayment)
-//                .status(EProcess.PROCESSING.getId())
-//                .service(serviceOthers)
-//                .electricBill(electricBill)
-//                .waterBill(waterBill)
-//                .leases(leases)
-//                .build();
-//
-//        receivableRepository.save(receivable);
-//
-//        return receivable;
-//    }
-
     public String createBillForm(int servicePayment, int electricPayment, int waterPayment, int calculationPayment, int apartmentPrice) {
         String result = "\n\t====Bill====\n"
                 + "Service Payment: " + servicePayment
