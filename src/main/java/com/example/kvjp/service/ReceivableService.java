@@ -9,6 +9,7 @@ import com.example.kvjp.repository.ReceivableRepository;
 import com.example.kvjp.repository.WaterBillRepository;
 import com.example.kvjp.service.email.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -235,10 +236,11 @@ public class ReceivableService {
         System.out.println("Test: " + timeStamp);
         emailService.sendSimpleEmail(
                 receivable.getLeases().getTenant().getEmail(),
-                timeStamp + "[#ROOM_" +receivable.getLeases().getApartment().getName() + "] THÔNG BÁO HOÁ ĐƠN CẦN THANH TOÁN ",
+                timeStamp + "[#ROOM_" + receivable.getLeases().getApartment().getName() + "] THÔNG BÁO HOÁ ĐƠN CẦN THANH TOÁN ",
                 formatEmailReceivable(receivable)
-                );
+        );
     }
+
     @Transactional
     public String formatEmailReceivable(Receivable receivable) {
         return
@@ -257,5 +259,14 @@ public class ReceivableService {
                         receivable.getElectricBill(), receivable.getWaterBill(), receivable, receivable.getLeases()
                 ) + " VND"
                 ;
+    }
+
+
+    @Scheduled(cron = "0 0 9 15 * ?") // Run at 9:00 any month
+    private void reminderPaid() {
+        List<Receivable> receivables = receivableRepository.findAllByStatus(EProcess.PROCESSING.getId());
+        for (Receivable receivable : receivables) {
+            sendMailToUser(receivable);
+        }
     }
 }

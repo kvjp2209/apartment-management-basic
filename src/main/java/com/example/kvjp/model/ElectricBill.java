@@ -59,7 +59,13 @@ public class ElectricBill {
         this.status = electricBill.getStatus();
     }
 
-
+    public ElectricBill(String name, int electricNumberOld, int electricNumberNew, int unit, int status) {
+        this.name = name;
+        this.electricNumberOld = electricNumberOld;
+        this.electricNumberNew = electricNumberNew;
+        this.unit = unit;
+        this.status = status;
+    }
 
     public Integer getId() {
         return id;

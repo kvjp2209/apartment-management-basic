@@ -13,4 +13,6 @@ public interface ReceivableRepository extends JpaRepository<Receivable, Integer>
     List<Receivable> findAllByName(String name);
 
     Receivable findByNameAndStatus(String name, int status);
+
+    List<Receivable> findAllByStatus(int statusId);
 }
