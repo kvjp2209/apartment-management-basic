@@ -263,6 +263,7 @@ public class ReceivableService {
 
 
     @Scheduled(cron = "0 0 9 15 * ?") // Run at 9:00 any month
+//    @Scheduled(fixedDelay = 1000)
     private void reminderPaid() {
         List<Receivable> receivables = receivableRepository.findAllByStatus(EProcess.PROCESSING.getId());
         for (Receivable receivable : receivables) {
