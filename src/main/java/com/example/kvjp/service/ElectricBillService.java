@@ -17,10 +17,7 @@ public class ElectricBillService {
 
 
     public boolean checkDuplicateNameAtProcessing(String name, int status) {
-        if (electricBillRepository.findByNameAndAndStatus(name, status) != null) {
-            return true;
-        }
-        return false;
+        return electricBillRepository.findByNameAndAndStatus(name, status) != null;
     }
 
 
@@ -50,7 +47,7 @@ public class ElectricBillService {
     @Transactional
     public ElectricBill updateElectricBill(ElectricBillRequestDto electricBillRequestDto, ElectricBill electricBill) {
         if (!electricBill.getName().equalsIgnoreCase(electricBillRequestDto.getName()) && electricBill.getStatus() == EProcess.PROCESSING.getId()) {
-            if (checkDuplicateNameAtProcessing(electricBill.getName(), EProcess.PROCESSING.getId()) == true) {
+            if (checkDuplicateNameAtProcessing(electricBill.getName(), EProcess.PROCESSING.getId())) {
                 return null;
             }
             electricBill.update(electricBillRequestDto, electricBill);

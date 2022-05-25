@@ -38,16 +38,14 @@ public class ApartmentService {
     }
 
     public List<Apartment> getAll() {
-        List<Apartment> apartments = apartmentRepository.findAll();
-        return apartments;
+        return apartmentRepository.findAll();
     }
 
     public Apartment getByName(String name) {
-        Apartment apartment = apartmentRepository.findByName(name);
-        return apartment;
+        return apartmentRepository.findByName(name);
     }
 
-    public ApartmentResponseDto getApartmentDetailsById(Integer id,Apartment apartment) {
+    public ApartmentResponseDto getApartmentDetailsById(Integer id, Apartment apartment) {
         List<Tenant> tenants = tenantRepository.findAllByApartmentId(id);
         ApartmentResponseDto apartmentResponseDto = new ApartmentResponseDto(
                 apartment.getId(),
@@ -89,10 +87,7 @@ public class ApartmentService {
     }
 
     public boolean checkDuplicateName(String name) {
-        if (apartmentRepository.findByName(name) != null) {
-            return true;
-        }
-        return false;
+        return apartmentRepository.findByName(name) != null;
     }
 
     public Apartment getById(int id) {

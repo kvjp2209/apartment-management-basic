@@ -6,6 +6,7 @@ import com.example.kvjp.model.Apartment;
 import com.example.kvjp.model.Tenant;
 import com.example.kvjp.service.ApartmentService;
 import com.example.kvjp.service.TenantService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/tenants")
+@SecurityRequirement(name = "javainuseapi")
 public class TenantController extends ResponseController {
     @Autowired
     TenantService tenantService;

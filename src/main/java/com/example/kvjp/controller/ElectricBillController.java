@@ -6,6 +6,7 @@ import com.example.kvjp.dto.response.ResponseDto;
 import com.example.kvjp.model.ElectricBill;
 import com.example.kvjp.model.Leases;
 import com.example.kvjp.service.ElectricBillService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/electrics")
+@SecurityRequirement(name = "javainuseapi")
 public class ElectricBillController extends ResponseController {
     @Autowired
     ElectricBillService electricBillService;

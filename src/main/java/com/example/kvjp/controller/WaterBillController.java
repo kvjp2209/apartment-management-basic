@@ -5,6 +5,7 @@ import com.example.kvjp.dto.request.WaterBillRequestDto;
 import com.example.kvjp.dto.response.ResponseDto;
 import com.example.kvjp.model.WaterBill;
 import com.example.kvjp.service.WaterBillService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/water")
+@SecurityRequirement(name = "javainuseapi")
 public class WaterBillController extends ResponseController {
     @Autowired
     WaterBillService waterBillService;

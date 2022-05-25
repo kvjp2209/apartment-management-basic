@@ -8,6 +8,7 @@ import com.example.kvjp.model.Leases;
 import com.example.kvjp.model.Receivable;
 import com.example.kvjp.service.LeasesService;
 import com.example.kvjp.service.ReceivableService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +18,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/receivable")
+@SecurityRequirement(name = "javainuseapi")
 public class ReceivableController extends ResponseController {
     @Autowired
     ReceivableService receivableService;

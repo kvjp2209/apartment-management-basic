@@ -4,9 +4,7 @@ import com.example.kvjp.constant.EProcess;
 import com.example.kvjp.dto.request.ReceivableRequestDto;
 import com.example.kvjp.dto.response.ReceivableResponseDto;
 import com.example.kvjp.model.*;
-import com.example.kvjp.repository.ElectricBillRepository;
 import com.example.kvjp.repository.ReceivableRepository;
-import com.example.kvjp.repository.WaterBillRepository;
 import com.example.kvjp.service.email.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -19,11 +17,6 @@ import java.util.Set;
 
 @Service
 public class ReceivableService {
-    @Autowired
-    private WaterBillRepository waterBillRepository;
-
-    @Autowired
-    private ElectricBillRepository electricBillRepository;
 
     @Autowired
     private ReceivableRepository receivableRepository;
@@ -39,9 +32,6 @@ public class ReceivableService {
 
     @Autowired
     ServiceOtherService serviceOtherService;
-//    public Receivable createReceivable(){
-//        return ;
-//    }
 
     //tính giá của bill hàm riêng biệt
     public int separatePricing(int oldNumber, int newNumber, int unit) {
@@ -104,10 +94,9 @@ public class ReceivableService {
         int servicePayment = serviceOtherService.getTotalServicePriceIn(receivable.getService());
 
         //tính tổng tiền tất cả phải chi
-        int calculationPayment = electricPayment + waterPayment + leases.getApartment().getPrice()
-                + servicePayment;
 
-        return calculationPayment;
+        return electricPayment + waterPayment + leases.getApartment().getPrice()
+                + servicePayment;
     }
 
     public String calculatePaymentForm(ElectricBill electricBill, WaterBill waterBill, Receivable receivable, Leases leases) {
@@ -122,19 +111,16 @@ public class ReceivableService {
         int calculationPayment = electricPayment + waterPayment + leases.getApartment().getPrice()
                 + servicePayment;
 
-        String result = createBillForm(servicePayment, electricPayment, waterPayment, leases.getApartment().getPrice(), calculationPayment);
-
-        return result;
+        return createBillForm(servicePayment, electricPayment, waterPayment, leases.getApartment().getPrice(), calculationPayment);
     }
 
     public String createBillForm(int servicePayment, int electricPayment, int waterPayment, int calculationPayment, int apartmentPrice) {
-        String result = "\n\t====Bill====\n"
+        return "\n\t====Bill====\n"
                 + "Service Payment: " + servicePayment
                 + "\nElectric Payment: " + electricPayment
                 + "\nWater Payment: " + waterPayment
                 + "\nApartment Price: " + apartmentPrice
                 + "\nTotal: " + calculationPayment;
-        return result;
     }
 
 
@@ -146,13 +132,11 @@ public class ReceivableService {
     }
 
     public Receivable getByNameReceivable(String name) {
-        Receivable receivable = receivableRepository.findByName(name);
-        return receivable;
+        return receivableRepository.findByName(name);
     }
 
     public Receivable getByNameReceivableAndStatus(String name, int status) {
-        Receivable receivable = receivableRepository.findByNameAndStatus(name, status);
-        return receivable;
+        return receivableRepository.findByNameAndStatus(name, status);
     }
 
     public ReceivableResponseDto getDetailById(int id) {
@@ -209,8 +193,8 @@ public class ReceivableService {
 
     public void disableReceivable(Receivable receivable) {
         receivable.setStatus(EProcess.DONE.getId());
-        receivable.getWaterBill().setStatus(EProcess.DONE.getId());
-        receivable.getElectricBill().setStatus(EProcess.DONE.getId());
+        waterBillService.disableWaterBill(receivable.getWaterBill());
+        electricBillService.disableElectricBill(receivable.getElectricBill());
         receivableRepository.save(receivable);
     }
 

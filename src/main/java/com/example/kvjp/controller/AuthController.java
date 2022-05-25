@@ -6,6 +6,7 @@ import com.example.kvjp.dto.response.ResponseDto;
 import com.example.kvjp.security.impl.UserDetailServiceImpl;
 import com.example.kvjp.security.impl.UserDetailsImpl;
 import com.example.kvjp.security.jwt.JwtTokenProvider;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -23,6 +24,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/auth")
+@SecurityRequirement(name = "javainuseapi")
 public class AuthController extends ResponseController {
     @Autowired
     AuthenticationManager authenticationManager;

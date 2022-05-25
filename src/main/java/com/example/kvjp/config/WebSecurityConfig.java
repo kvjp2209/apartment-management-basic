@@ -67,6 +67,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests()
                 .antMatchers("/auth/login").permitAll()
+                .antMatchers("/swagger-ui/**", "/javainuse-openapi/**").permitAll()
+
 //                .antMatchers("/api/**").permitAll()
 //                .antMatchers("/swagger-ui.html").permitAll()
 //                .antMatchers("/webjars/**").permitAll()
@@ -78,13 +80,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
 
-    @Override
-    public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/v2/api-docs",
-                "/configuration/ui",
-                "/swagger-resources/**",
-                "/configuration/security",
-                "/swagger-ui.html",
-                "/webjars/**");
-    }
+//    @Override
+//    public void configure(WebSecurity web) throws Exception {
+//        web.ignoring().antMatchers("/v2/api-docs",
+//                "/configuration/ui",
+//                "/swagger-resources/**",
+//                "/configuration/security",
+//                "/swagger-ui.html",
+//                "/webjars/**");
+//    }
 }
