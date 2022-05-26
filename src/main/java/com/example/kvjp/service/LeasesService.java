@@ -60,4 +60,7 @@ public class LeasesService {
         leasesRepository.save(leases);
     }
 
+    public List<Leases> checkByApartmentAndStatus(Apartment apartment, int status) {
+        return leasesRepository.findAllByApartmentAndStatus(apartment, status);
+    }
 }

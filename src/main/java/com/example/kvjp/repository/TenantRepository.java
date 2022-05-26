@@ -9,10 +9,6 @@ import java.util.List;
 
 @Repository
 public interface TenantRepository extends JpaRepository<Tenant, Integer> {
-    @Query(value = "SELECT te FROM Tenant te " +
-            "JOIN FETCH te.apartment a " +
-            "WHERE te.apartment.id = :id")
-    List<Tenant> findAllByApartmentId(Integer id);
 
     Tenant findByIdCard(String idCard);
 

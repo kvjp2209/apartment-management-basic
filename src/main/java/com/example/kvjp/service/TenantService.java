@@ -29,7 +29,7 @@ public class TenantService {
     }
 
     @Transactional
-    public Tenant createTenant(TenantRequestDto tenantRequestDto, Apartment apartment) {
+    public Tenant createTenant(TenantRequestDto tenantRequestDto) {
         Tenant tenant = new Tenant(tenantRequestDto.getName(),
                 tenantRequestDto.getEmail(),
                 tenantRequestDto.getAge(),
@@ -48,16 +48,16 @@ public class TenantService {
     }
 
     @Transactional
-    public Tenant updateTenant(TenantRequestDto tenantRequestDto, Tenant tenant, Apartment apartment) {
+    public Tenant updateTenant(TenantRequestDto tenantRequestDto, Tenant tenant) {
         if (!tenant.getIdCard().equalsIgnoreCase(tenantRequestDto.getIdCard()) == true) {
             if (checkDuplicateIdCard(tenantRequestDto.getIdCard()) == false) {
                 return null;
             }
-            tenant.update(tenantRequestDto, apartment);
+            tenant.update(tenantRequestDto);
             tenantRepository.save(tenant);
             return tenant;
         }
-        tenant.update(tenantRequestDto, apartment);
+        tenant.update(tenantRequestDto);
         tenantRepository.save(tenant);
         return tenant;
     }

@@ -26,11 +26,7 @@ public class TenantController extends ResponseController {
     @PostMapping("")
     public ResponseEntity<ResponseDto> createTenant(@Valid @RequestBody TenantRequestDto tenantRequestDto) {
         try {
-            Apartment apartment = apartmentService.getByName(tenantRequestDto.getApartmentName());
-            if (apartment == null) {
-                return responseUtil.getNotFoundResponse("Not found apartment");
-            }
-            Tenant tenant = tenantService.createTenant(tenantRequestDto, apartment);
+            Tenant tenant = tenantService.createTenant(tenantRequestDto);
             return responseUtil.getSuccessResponse(tenant);
         } catch (Exception e) {
             e.printStackTrace();
@@ -85,11 +81,7 @@ public class TenantController extends ResponseController {
             if (tenant == null) {
                 return responseUtil.getNotFoundResponse("not found by this id");
             }
-            Apartment apartment = apartmentService.getByName(tenantRequestDto.getApartmentName());
-            if (apartment == null) {
-                return responseUtil.getNotFoundResponse("not found by this apartment");
-            }
-            Tenant result = tenantService.updateTenant(tenantRequestDto, tenant, apartment);
+            Tenant result = tenantService.updateTenant(tenantRequestDto, tenant);
             if (result == null) {
                 return responseUtil.getBadRequestResponse("Identify card is existed!");
             }

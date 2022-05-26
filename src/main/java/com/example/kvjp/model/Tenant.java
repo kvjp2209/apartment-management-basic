@@ -30,16 +30,12 @@ public class Tenant {
 
     private int status;
 
-    @ManyToOne
-    @JoinColumn(name = "apartment_id")
-    private Apartment apartment;
-
     public Tenant() {
     }
 
 
 
-    public void update(TenantRequestDto tenantRequestDto, Apartment apartment) {
+    public void update(TenantRequestDto tenantRequestDto) {
         this.name = tenantRequestDto.getName();
         this.email = tenantRequestDto.getEmail();
         this.age = tenantRequestDto.getAge();
@@ -48,19 +44,6 @@ public class Tenant {
         this.gender = tenantRequestDto.getGender();
         this.idCard = tenantRequestDto.getIdCard();
         this.status = tenantRequestDto.getStatus();
-        this.apartment = apartment;
-    }
-
-    public Tenant(String name, String email, int age, Timestamp dob, String phone, int gender, String idCard, int status, Apartment apartment) {
-        this.name = name;
-        this.email = email;
-        this.age = age;
-        this.dob = dob;
-        this.phone = phone;
-        this.gender = gender;
-        this.idCard = idCard;
-        this.status = status;
-        this.apartment = apartment;
     }
 
     public Tenant(String name, String email, int age, Timestamp dob, String phone, int gender, String idCard, int status) {
@@ -82,13 +65,6 @@ public class Tenant {
         this.status = status;
     }
 
-    public Apartment getApartment() {
-        return apartment;
-    }
-
-    public void setApartment(Apartment apartment) {
-        this.apartment = apartment;
-    }
 
     public Integer getId() {
         return id;

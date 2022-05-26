@@ -1,11 +1,14 @@
 package com.example.kvjp.service;
 
+import com.example.kvjp.constant.EProcess;
 import com.example.kvjp.constant.EStatus;
 import com.example.kvjp.dto.request.ApartmentRequestDto;
 import com.example.kvjp.dto.response.ApartmentResponseDto;
 import com.example.kvjp.model.Apartment;
+import com.example.kvjp.model.Leases;
 import com.example.kvjp.model.Tenant;
 import com.example.kvjp.repository.ApartmentRepository;
+import com.example.kvjp.repository.LeasesRepository;
 import com.example.kvjp.repository.TenantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +24,8 @@ public class ApartmentService {
     @Autowired
     TenantRepository tenantRepository;
 
+    @Autowired
+    LeasesRepository leasesRepository;
     @Transactional
     public Apartment create(ApartmentRequestDto apartmentRequestDto) {
         Apartment apartment = new Apartment(
@@ -46,7 +51,8 @@ public class ApartmentService {
     }
 
     public ApartmentResponseDto getApartmentDetailsById(Integer id, Apartment apartment) {
-        List<Tenant> tenants = tenantRepository.findAllByApartmentId(id);
+        Leases leases = leasesRepository.findAllByApartmentAndStatus(apartment, EProcess.PROCESSING.getId()).get(0);
+
         ApartmentResponseDto apartmentResponseDto = new ApartmentResponseDto(
                 apartment.getId(),
                 apartment.getName(),
@@ -56,8 +62,7 @@ public class ApartmentService {
                 apartment.getBathroom(),
                 apartment.getImage(),
                 apartment.getPrice(),
-                tenants.size(),
-                tenants
+                leases.getTenant()
         );
         return apartmentResponseDto;
     }

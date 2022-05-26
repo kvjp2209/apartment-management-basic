@@ -23,22 +23,8 @@ public class TenantRequestDto {
 
     private int status;
 
-    @JsonProperty("apartment_name")
-    private String apartmentName;
 
     public TenantRequestDto() {
-    }
-
-    public TenantRequestDto(String name, String email, int age, Timestamp dob, String phone, int gender, String idCard, int status, String apartmentName) {
-        this.name = name;
-        this.email = email;
-        this.age = age;
-        this.dob = dob;
-        this.phone = phone;
-        this.gender = gender;
-        this.idCard = idCard;
-        this.status = status;
-        this.apartmentName = apartmentName;
     }
 
     public TenantRequestDto(String name, String email, int age, Timestamp dob, String phone, int gender, String idCard, int status) {
@@ -117,11 +103,4 @@ public class TenantRequestDto {
         this.idCard = idCard;
     }
 
-    public String getApartmentName() {
-        return apartmentName;
-    }
-
-    public void setApartmentName(String apartmentName) {
-        this.apartmentName = apartmentName;
-    }
 }

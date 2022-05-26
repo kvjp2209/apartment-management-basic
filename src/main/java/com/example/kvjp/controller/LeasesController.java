@@ -1,5 +1,6 @@
 package com.example.kvjp.controller;
 
+import com.example.kvjp.constant.EProcess;
 import com.example.kvjp.dto.request.LeasesRequestDto;
 import com.example.kvjp.dto.response.ResponseDto;
 import com.example.kvjp.model.Apartment;
@@ -33,6 +34,9 @@ public class LeasesController extends ResponseController {
             Apartment apartment = apartmentService.getByIdApartment(leasesRequestDto.getApartmentId());
             if (apartment == null) {
                 return responseUtil.getNotFoundResponse("Not found Apartment");
+            }
+            if (leasesService.checkByApartmentAndStatus(apartment, EProcess.PROCESSING.getId()).size() != 0) {
+                return responseUtil.getBadRequestResponse("leases existed");
             }
             Tenant tenant = tenantService.getByIdTenant(leasesRequestDto.getTenantId());
             if (tenant == null) {

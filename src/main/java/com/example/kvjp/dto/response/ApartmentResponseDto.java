@@ -21,11 +21,9 @@ public class ApartmentResponseDto {
 
     private int price;
 
-    private int numberIn;
+    private Tenant tenant;
 
-    private List<Tenant> tenants;
-
-    public ApartmentResponseDto(Integer id, String name, int status, int area, int bedroom, int bathroom, String image, int price, int numberIn, List<Tenant> tenants) {
+    public ApartmentResponseDto(Integer id, String name, int status, int area, int bedroom, int bathroom, String image, int price,  Tenant tenant) {
         this.id = id;
         this.name = name;
         this.status = status;
@@ -34,8 +32,7 @@ public class ApartmentResponseDto {
         this.bathroom = bathroom;
         this.image = image;
         this.price = price;
-        this.numberIn = numberIn;
-        this.tenants = tenants;
+        this.tenant = tenant;
     }
 
     public ApartmentResponseDto(String name, int status, int area, int bedroom, int bathroom, String image, int price) {
@@ -48,17 +45,6 @@ public class ApartmentResponseDto {
         this.price = price;
     }
 
-    public ApartmentResponseDto(String name, int status, int area, int bedroom, int bathroom, String image, int price, int numberIn, List<Tenant> tenants) {
-        this.name = name;
-        this.status = status;
-        this.area = area;
-        this.bedroom = bedroom;
-        this.bathroom = bathroom;
-        this.image = image;
-        this.price = price;
-        this.numberIn = numberIn;
-        this.tenants = tenants;
-    }
 
     public ApartmentResponseDto() {
     }
@@ -127,19 +113,11 @@ public class ApartmentResponseDto {
         this.price = price;
     }
 
-    public int getNumberIn() {
-        return numberIn;
+    public Tenant getTenant() {
+        return tenant;
     }
 
-    public void setNumberIn(int numberIn) {
-        this.numberIn = numberIn;
-    }
-
-    public List<Tenant> getTenants() {
-        return tenants;
-    }
-
-    public void setTenants(List<Tenant> tenants) {
-        this.tenants = tenants;
+    public void setTenant(Tenant tenant) {
+        this.tenant = tenant;
     }
 }
