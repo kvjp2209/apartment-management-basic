@@ -5,6 +5,7 @@ import com.example.kvjp.dto.request.ElectricBillRequestDto;
 import com.example.kvjp.dto.response.ResponseDto;
 import com.example.kvjp.model.ElectricBill;
 import com.example.kvjp.model.Leases;
+import com.example.kvjp.model.WaterBill;
 import com.example.kvjp.service.ElectricBillService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,6 +59,21 @@ public class ElectricBillController extends ResponseController {
         try {
             List<ElectricBill> electricBills = electricBillService.getAllElectricBill();
             return responseUtil.getSuccessResponse(electricBills);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return responseUtil.getInternalServerErrorResponse();
+        }
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<ResponseDto> deleteElectricBill(@PathVariable Integer id) {
+        try {
+            ElectricBill electricBill = electricBillService.getById(id);
+            if (electricBill == null) {
+                return responseUtil.getNotFoundResponse("Not found this electric bill");
+            }
+            electricBillService.disableElectricBill(electricBill);
+            return responseUtil.getSuccessResponse(electricBill);
         } catch (Exception e) {
             e.printStackTrace();
             return responseUtil.getInternalServerErrorResponse();
