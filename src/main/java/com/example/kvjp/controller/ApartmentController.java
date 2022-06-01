@@ -8,6 +8,7 @@ import com.example.kvjp.service.ApartmentService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -23,7 +24,7 @@ public class ApartmentController extends ResponseController {
     @PostMapping("")
     public ResponseEntity<ResponseDto> createApartment(@Valid @RequestBody ApartmentRequestDto apartmentRequestDto) {
         try {
-            if (apartmentService.getByName(apartmentRequestDto.getName()) != null) {
+            if (apartmentService.getApartmentByName(apartmentRequestDto.getName()) != null) {
                 return responseUtil.getBadRequestResponse("duplicate name!!!");
             }
             Apartment apartment = apartmentService.create(apartmentRequestDto);
@@ -95,14 +96,31 @@ public class ApartmentController extends ResponseController {
     }
 
     @GetMapping("/all-detail/{id}")
-    public ResponseEntity<ResponseDto> getAllDetailApartment(@PathVariable Integer id) {
+    public ResponseEntity<ResponseDto> getAllDetailApartmentById(@PathVariable Integer id) {
         try {
             Apartment apartment = apartmentService.getByIdApartment(id);
             if (apartment == null) {
                 return responseUtil.getNotFoundResponse("not found apartment!!!");
             }
-            ApartmentResponseDto apartmentResponseDto = apartmentService.getApartmentDetailsById(id, apartment);
+            ApartmentResponseDto apartmentResponseDto = apartmentService.getApartmentDetails(apartment);
             return responseUtil.getSuccessResponse(apartmentResponseDto);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return responseUtil.getInternalServerErrorResponse();
+        }
+    }
+
+    @PostMapping("/filter-name")
+    public ResponseEntity<ResponseDto> getAllDetailApartmentByName(@Valid @RequestBody String name) {
+        try {
+            List<Apartment> list = null;
+
+            if (StringUtils.hasText(name)) {
+                list = apartmentService.getApartmentByNameContaining(name);
+            } else {
+                list = apartmentService.getAll();
+            }
+            return responseUtil.getSuccessResponse(list);
         } catch (Exception e) {
             e.printStackTrace();
             return responseUtil.getInternalServerErrorResponse();

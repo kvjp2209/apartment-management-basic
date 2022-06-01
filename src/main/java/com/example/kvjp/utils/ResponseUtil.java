@@ -25,8 +25,8 @@ public class ResponseUtil {
 
 
     public ResponseEntity<ResponseDto> getInternalServerErrorResponse() {
-        return new ResponseEntity<>(new ResponseDto(HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(),
-                HttpStatus.INTERNAL_SERVER_ERROR.value()), HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(new ResponseDto(HttpStatus.INTERNAL_SERVER_ERROR.value(), HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase()),
+                HttpStatus.INTERNAL_SERVER_ERROR );
     }
 
     public ResponseEntity<ResponseDto> getSuccessResponse(Object responseData) {

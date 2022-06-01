@@ -26,6 +26,7 @@ public class ApartmentService {
 
     @Autowired
     LeasesRepository leasesRepository;
+
     @Transactional
     public Apartment create(ApartmentRequestDto apartmentRequestDto) {
         Apartment apartment = new Apartment(
@@ -46,11 +47,11 @@ public class ApartmentService {
         return apartmentRepository.findAll();
     }
 
-    public Apartment getByName(String name) {
+    public Apartment getApartmentByName(String name) {
         return apartmentRepository.findByName(name);
     }
 
-    public ApartmentResponseDto getApartmentDetailsById(Integer id, Apartment apartment) {
+    public ApartmentResponseDto getApartmentDetails(Apartment apartment) {
         Leases leases = leasesRepository.findAllByApartmentAndStatus(apartment, EProcess.PROCESSING.getId()).get(0);
 
         ApartmentResponseDto apartmentResponseDto = new ApartmentResponseDto(
@@ -65,6 +66,10 @@ public class ApartmentService {
                 leases.getTenant()
         );
         return apartmentResponseDto;
+    }
+
+    public List<Apartment> getApartmentByNameContaining(String name) {
+        return apartmentRepository.findByNameContaining(name);
     }
 
     @Transactional
